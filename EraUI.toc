@@ -1,0 +1,7 @@
+## Interface: 80205
+## Author: AS
+## Version: 1.0
+## Title: |cff00c0ffEraUI|r
+## Notes: Eraguin UI
+
+EraUI.lua
