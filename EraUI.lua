@@ -288,6 +288,50 @@ local function AutoSellAndRepair()
 end
 
 --********************************
+--            ChatBox
+--********************************
+
+local function HideChatBox()
+	_CHATHIDE=not _CHATHIDE 
+	for i=1,NUM_CHAT_WINDOWS do 
+		for _,v in pairs{"","Tab"}do 
+			local f=_G["ChatFrame"..i..v]
+			if _CHATHIDE then 
+			f.v=f:IsVisible()
+			ChatFrameMenuButton:Hide();
+			ChatFrameChannelButton:Hide();
+			QuickJoinToastButton:Hide();
+			end 
+			f.ORShow=f.ORShow or f.Show f.Show=_CHATHIDE and f.Hide or f.ORShow 
+			if f.v then 
+				f:Show();
+				ChatFrameMenuButton:Show();
+				ChatFrameChannelButton:Show();
+				QuickJoinToastButton:Show();
+			end
+		end 
+	end
+end
+
+local function UpdateChatBox()
+
+	HideChatBox();
+	
+	local f = CreateFrame("Button",nil,UIParent)
+	f:SetSize(30,30)
+	f.t=f:CreateTexture(nil,"BORDER")
+	f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+	f.t:SetAllPoints(f)
+	f:SetPoint("BOTTOM","ChatFrame1ButtonFrame","BOTTOM",0,-35)
+	f:Show()
+
+	local ChatHide = false
+
+	f:SetScript("OnClick", HideChatBox);
+	
+end
+
+--********************************
 --            QuestTracker
 --********************************
 local QT = ObjectiveTrackerFrame
@@ -337,6 +381,8 @@ function EraUI_Update()
 	ModifyMiniMap();
 	
 	AutoSellAndRepair();
+	
+	UpdateChatBox();
 
 end
 
