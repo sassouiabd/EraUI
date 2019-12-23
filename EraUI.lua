@@ -58,6 +58,21 @@ end
 --********************************
 --            PLAYER
 --********************************
+
+hooksecurefunc("UnitFramePortrait_Update",function(self)
+        if self.portrait then
+                if UnitIsPlayer(self.unit) then                         
+                        local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                        if t then
+                                self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                                self.portrait:SetTexCoord(unpack(t))
+                        end
+                else
+                        self.portrait:SetTexCoord(0,1,0,1)
+                end
+        end
+end)
+
 local function ModifyPlayerProps() 
 	BuffFrame:ClearAllPoints();
 	BuffFrame:SetPoint("CENTER",PlayerFrame,"CENTER",950,100);
@@ -70,6 +85,37 @@ local function ModifyPlayerProps()
 	
 	PlayerPrestigeBadge:SetAlpha(0);
 	PlayerPrestigePortrait:SetAlpha(0);
+	
+	
+	
+	-- Cast Bar Timers
+	CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil);
+	CastingBarFrame.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE");
+	CastingBarFrame.timer:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 0, 0);
+	CastingBarFrame.update = .1;
+	 
+	CastingBarFrame:HookScript("OnUpdate",function(self,elapsed)
+			if not self.timer then return end
+			if self.update and self.update < elapsed then
+					if self.casting then
+							self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+					elseif self.channeling then
+							self.timer:SetText(format("%.1f", max(self.value, 0)))
+					else
+							self.timer:SetText("")
+					end
+					self.update = .1
+			else
+					self.update = self.update - elapsed
+			end
+	end)
+	
+	-- Cast Bar Posi
+	CastingBarFrame:ClearAllPoints()
+	CastingBarFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 430, 90);
+	CastingBarFrame.SetPoint = function() end
+	CastingBarFrame:SetScale(1.5)
+
 
 end
 
@@ -95,13 +141,39 @@ local function ModifyTargetProps()
 	TargetFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 500);
 	TargetFrame.SetPoint = function() end;
 	
+
+	
+	TargetFrameTextureFramePrestigeBadge:SetAlpha(0);
+	TargetFrameTextureFramePrestigePortrait:SetAlpha(0);
+	
+	
+		-- Cast Bar Timers
+	TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil);
+	TargetFrameSpellBar.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE");
+	TargetFrameSpellBar.timer:SetPoint("BOTTOMRIGHT", TargetFrameSpellBar, "BOTTOMRIGHT", 0, 0);
+	TargetFrameSpellBar.update = .1;
+	 
+	TargetFrameSpellBar:HookScript("OnUpdate",function(self,elapsed)
+			if not self.timer then return end
+			if self.update and self.update < elapsed then
+					if self.casting then
+							self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+					elseif self.channeling then
+							self.timer:SetText(format("%.1f", max(self.value, 0)))
+					else
+							self.timer:SetText("")
+					end
+					self.update = .1
+			else
+					self.update = self.update - elapsed
+			end
+	end)
+	
+	
 	TargetFrameSpellBar:SetScale(1.88);
 	TargetFrameSpellBar:ClearAllPoints();
 	TargetFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",100, 315);
 	TargetFrameSpellBar.SetPoint = function() end;
-	
-	TargetFrameTextureFramePrestigeBadge:SetAlpha(0);
-	TargetFrameTextureFramePrestigePortrait:SetAlpha(0);
 
 end
 
@@ -116,13 +188,33 @@ local function ModifyFocusProps()
 	FocusFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 150);
 	FocusFrame.SetPoint = function() end;
 		
+	FocusFrameTextureFramePrestigeBadge:SetAlpha(0);
+	FocusFrameTextureFramePrestigePortrait:SetAlpha(0);
+	
+	FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil);
+	FocusFrameSpellBar.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE");
+	FocusFrameSpellBar.timer:SetPoint("BOTTOMRIGHT", FocusFrameSpellBar, "BOTTOMRIGHT", 0, 0);
+	FocusFrameSpellBar.update = .1;
+	FocusFrameSpellBar:HookScript("OnUpdate",function(self,elapsed)
+		if not self.timer then return end
+		if self.update and self.update < elapsed then
+				if self.casting then
+						self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+				elseif self.channeling then
+						self.timer:SetText(format("%.1f", max(self.value, 0)))
+				else
+						self.timer:SetText("")
+				end
+				self.update = .1
+		else
+				self.update = self.update - elapsed
+		end
+	end)
+	
 	FocusFrameSpellBar:SetScale(1.88)
 	FocusFrameSpellBar:ClearAllPoints();
 	FocusFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",100, 130);
 	FocusFrameSpellBar.SetPoint = function() end;
-	
-	FocusFrameTextureFramePrestigeBadge:SetAlpha(0);
-	FocusFrameTextureFramePrestigePortrait:SetAlpha(0);
 end
 
 --********************************
@@ -170,7 +262,7 @@ function EraUI_Update()
 	
 	MoveBars();
 	
-	EliteFrame();
+	--EliteFrame();
 
 end
 
