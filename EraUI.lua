@@ -39,18 +39,57 @@ end
 
 local function UpdateBars()
 	--Action bars
+  MainMenuBarArtFrame:SetScale(1.5);
+  
+	MicroButtonAndBagsBar:ClearAllPoints();
+	MicroButtonAndBagsBar:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -50, 0);
+	MicroButtonAndBagsBar.SetPoint = function() end;
+  
+  MainMenuBarBackpackButton:ClearAllPoints()
+	MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 55);
+  MainMenuBarBackpackButton.SetPoint = function() end
+
+  MicroButtonAndBagsBar.MicroBagBar:Hide(1)
+
+
+  MicroButtonAndBagsBar:SetScale(0.8);
+  CharacterMicroButton:SetScale(0.8);
+  SpellbookMicroButton:SetScale(0.8);
+  TalentMicroButton:SetScale(0.8);
+  AchievementMicroButton:SetScale(0.8);
+  QuestLogMicroButton:SetScale(0.8);
+  GuildMicroButton:SetScale(0.8);
+  LFDMicroButton:SetScale(0.8);
+  CollectionsMicroButton:SetScale(0.8);
+  EJMicroButton:SetScale(0.8);
+  StoreMicroButton:SetScale(0.8);
+  MainMenuMicroButton:SetScale(0.8);
+  
+  
+
+
 	ActionButton1:ClearAllPoints()
-	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 550, 40);
+	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 40);
 	ActionButton1.SetPoint = function() end;
+  
+  MultiBarBottomLeft:ClearAllPoints()
+	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 82);
+	MultiBarBottomLeft.SetPoint = function() end;
+  
+
 	
 	MultiBarBottomRightButton1:ClearAllPoints()
 	MultiBarBottomRightButton1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, -50);
 	MultiBarBottomRightButton1.SetPoint = function() end;
 	
 	--Stance bar
+
 	StanceButton1:ClearAllPoints();
-	StanceButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 450, 40);
+	StanceButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 450, 78);
 	StanceButton1.SetPoint = function() end;
+  StanceBarFrame:SetScale(0.8);
+  
+
 
 end
 
@@ -75,7 +114,7 @@ end)
 
 local function UpdatePlayer() 
 	BuffFrame:ClearAllPoints();
-	BuffFrame:SetPoint("CENTER",PlayerFrame,"CENTER",950,100);
+	BuffFrame:SetPoint("CENTER",PlayerFrame,"CENTER",1150,150);
 	BuffFrame.SetPoint = function() end;
 	
 	PlayerFrame:SetScale(1.2);
@@ -341,40 +380,47 @@ end
 
 local function HideMicroButtonsAndBags()
 
-	_Hide=not _Hide;
+	_HideMicroMenu=not _HideMicroMenu;
   
-  if _Hide then
-     MicroButtonAndBagsBar:Hide()
-     CharacterMicroButton:Hide()
-     SpellbookMicroButton:Hide()
-     TalentMicroButton:Hide()
-     AchievementMicroButton:Hide()
-     QuestLogMicroButton:Hide()
-     GuildMicroButton:Hide()
-     LFDMicroButton:Hide()
-     CollectionsMicroButton:Hide()
+
+
+
+  if _HideMicroMenu then
+     MicroButtonAndBagsBar:Hide();
+     CharacterMicroButton:Hide();
+     SpellbookMicroButton:Hide();
+     TalentMicroButton:Hide();
+     AchievementMicroButton:Hide();
+     QuestLogMicroButton:Hide();
+     GuildMicroButton:Hide();
+     LFDMicroButton:Hide();
+     CollectionsMicroButton:Hide();
      EJMicroButton:Hide()
-     StoreMicroButton:Hide()
-     MainMenuMicroButton:Hide()
+    StoreMicroButton:SetScript("OnShow",StoreMicroButton.Hide)
+    StoreMicroButton:Hide()
+     MainMenuMicroButton:Hide();
   else
-    MicroButtonAndBagsBar:Show()
-    CharacterMicroButton:Show()
-    SpellbookMicroButton:Show()
-    TalentMicroButton:Show()
-    AchievementMicroButton:Show()
-    QuestLogMicroButton:Show()
-    GuildMicroButton:Show()
-    LFDMicroButton:Show()
-    CollectionsMicroButton:Show()
-    EJMicroButton:Show()
-    StoreMicroButton:Show()
-    MainMenuMicroButton:Show()
+
+    MicroButtonAndBagsBar:Show();
+    CharacterMicroButton:Show();
+    SpellbookMicroButton:Show();
+    TalentMicroButton:Show();
+    AchievementMicroButton:Show();
+    QuestLogMicroButton:Show();
+    GuildMicroButton:Show();
+    LFDMicroButton:Show();
+    CollectionsMicroButton:Show();
+    EJMicroButton:Show();
+    StoreMicroButton:SetScript("OnShow",StoreMicroButton.Show)
+    StoreMicroButton:Show();
+    MainMenuMicroButton:Show();
   end
 end
 
 local function UpdateMicroButtonsAndBags()
 
-	
+	HideMicroButtonsAndBags();
+  
 	local f = CreateFrame("Button",nil,UIParent)
 	f:SetSize(30,30)
 	f.t=f:CreateTexture(nil,"BORDER")
