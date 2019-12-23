@@ -218,6 +218,30 @@ local function ModifyFocusProps()
 end
 
 --********************************
+--            MiniMap
+--********************************
+local function ModifyMiniMap()
+
+	-- Minimap Tweaks
+	--Dont change anything here
+	MinimapZoomIn:Hide()
+	MinimapZoomOut:Hide()
+	Minimap:EnableMouseWheel(true)
+	Minimap:SetScript('OnMouseWheel', function(self, delta)
+			if delta > 0 then
+					Minimap_ZoomIn()
+			else
+					Minimap_ZoomOut()
+			end
+	end)
+	MiniMapTracking:ClearAllPoints()
+	MiniMapTracking:SetPoint("TOPRIGHT", -26, 7)
+	MiniMapTracking.SetPoint = function() end;
+
+end
+
+
+--********************************
 --            QuestTracker
 --********************************
 local QT = ObjectiveTrackerFrame
@@ -262,7 +286,9 @@ function EraUI_Update()
 	
 	MoveBars();
 	
-	--EliteFrame();
+	EliteFrame();
+	
+	ModifyMiniMap();
 
 end
 
