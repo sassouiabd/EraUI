@@ -13,7 +13,7 @@ local EraUI_Frame = CreateFrame("Frame");
 	-- for i = 1, 12 do _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(0) end
 -- end
 
-local function HideUseless()
+local function HideUslessUI()
 
 	-- MainBarArt
 	MainMenuBarArtFrameBackground:Hide();
@@ -37,7 +37,7 @@ local function HideUseless()
 	
 end
 
-local function MoveBars()
+local function UpdateBars()
 	--Action bars
 	ActionButton1:ClearAllPoints()
 	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 550, 40);
@@ -73,7 +73,7 @@ hooksecurefunc("UnitFramePortrait_Update",function(self)
         end
 end)
 
-local function ModifyPlayerProps() 
+local function UpdatePlayer() 
 	BuffFrame:ClearAllPoints();
 	BuffFrame:SetPoint("CENTER",PlayerFrame,"CENTER",950,100);
 	BuffFrame.SetPoint = function() end;
@@ -85,7 +85,6 @@ local function ModifyPlayerProps()
 	
 	PlayerPrestigeBadge:SetAlpha(0);
 	PlayerPrestigePortrait:SetAlpha(0);
-	
 	
 	
 	-- Cast Bar Timers
@@ -119,7 +118,7 @@ local function ModifyPlayerProps()
 
 end
 
-local function EliteFrame()
+local function ToggleEliteFrame()
 	local t="Interface\\TargetingFrame\\UI-TargetingFrame-rare"
 	PlayerFrameTexture:SetTexture(t)
 	hooksecurefunc("TargetFrame_Update",
@@ -131,18 +130,54 @@ local function EliteFrame()
 end
 
 --********************************
+--            Textures
+-- TODO addit in function
+--********************************
+
+local frame=CreateFrame("Frame")
+frame:RegisterEvent("ADDON_LOADED")
+
+frame:SetScript("OnEvent", function(self, event, addon)
+		if (addon == "Blizzard_TimeManager") then
+				for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
+						PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
+						TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
+						BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
+						MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
+						MiniMapMailBorder, MinimapBorderTop,
+						select(1, TimeManagerClockButton:GetRegions())
+				}) do
+						v:SetVertexColor(.4, .4, .4)
+				end
+
+				for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
+						v:SetVertexColor(1, 1, 1)
+				end
+
+				self:UnregisterEvent("ADDON_LOADED")
+				frame:SetScript("OnEvent", nil)
+		end
+end)
+
+for i, v in pairs({ MainMenuBarLeftEndCap, MainMenuBarRightEndCap }) do
+		v:SetVertexColor(.35, .35, .35)
+end
+
+--********************************
 --            Target
 --********************************
 
-local function ModifyTargetProps()
+local function UpdateTarget()
 
 	TargetFrame:SetScale(1.2);
 	TargetFrame:ClearAllPoints();
 	TargetFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 500);
 	TargetFrame.SetPoint = function() end;
 	
+	--Combo point on target
+	SetCVar("comboPointLocation",1)
 
-	
+	-- Remove pvp icon
 	TargetFrameTextureFramePrestigeBadge:SetAlpha(0);
 	TargetFrameTextureFramePrestigePortrait:SetAlpha(0);
 	
@@ -181,13 +216,14 @@ end
 --            Focus
 --********************************
 
-local function ModifyFocusProps()
+local function UpdateFocus()
 
 	FocusFrame:SetScale(1.2);
 	FocusFrame:ClearAllPoints();
 	FocusFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 150);
 	FocusFrame.SetPoint = function() end;
-		
+	
+	-- Remove PVP icon
 	FocusFrameTextureFramePrestigeBadge:SetAlpha(0);
 	FocusFrameTextureFramePrestigePortrait:SetAlpha(0);
 	
@@ -220,7 +256,7 @@ end
 --********************************
 --            MiniMap
 --********************************
-local function ModifyMiniMap()
+local function UpdateMinimap()
 
 	-- Minimap Tweaks
 	--Dont change anything here
@@ -243,7 +279,7 @@ end
 --********************************
 --            AutosSell
 --********************************
-local function AutoSellAndRepair()
+local function ToggleAutoSellAndRepair()
 
 	-- Autosell grey trash and repair
 	--Don't Change anything here
@@ -301,6 +337,7 @@ local function HideChatBox()
 			ChatFrameMenuButton:Hide();
 			ChatFrameChannelButton:Hide();
 			QuickJoinToastButton:Hide();
+			ObjectiveTrackerFrame:Hide();
 			end 
 			f.ORShow=f.ORShow or f.Show f.Show=_CHATHIDE and f.Hide or f.ORShow 
 			if f.v then 
@@ -308,6 +345,7 @@ local function HideChatBox()
 				ChatFrameMenuButton:Show();
 				ChatFrameChannelButton:Show();
 				QuickJoinToastButton:Show();
+				ObjectiveTrackerFrame:Show();
 			end
 		end 
 	end
@@ -366,21 +404,21 @@ end)
 --********************************
 function EraUI_Update()
 
-	ModifyPlayerProps();
+	UpdatePlayer();
 
-	ModifyTargetProps();
+	UpdateTarget();
 
-	ModifyFocusProps();
-
-	HideUseless();
+	UpdateFocus();
 	
-	MoveBars();
+	HideUslessUI();
 	
-	EliteFrame();
+	UpdateBars();
 	
-	ModifyMiniMap();
+	ToggleEliteFrame();
 	
-	AutoSellAndRepair();
+	UpdateMinimap();
+	
+	ToggleAutoSellAndRepair();
 	
 	UpdateChatBox();
 
