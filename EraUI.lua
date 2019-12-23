@@ -3,15 +3,26 @@ local EraUI_Frame = CreateFrame("Frame");
 --********************************
 --            Bars
 --********************************
--- Hide ShortCuts
--- local function HideAllHotKeys()
-	-- for i = 1, 12 do _G["BonusActionButton"..i.."HotKey"]:SetAlpha(0) end
-	-- for i = 1, 12 do _G["MultiBarBottomLeftButton"..i.."HotKey"]:SetAlpha(0) end
-	-- for i = 1, 12 do _G["MultiBarBottomRightButton"..i.."HotKey"]:SetAlpha(0) end
-	-- for i = 1, 12 do _G["ActionButton"..i.."HotKey"]:SetAlpha(0) end
-	-- for i = 1, 12 do _G["MultiBarLeftButton"..i.."HotKey"]:SetAlpha(0) end
-	-- for i = 1, 12 do _G["MultiBarRightButton"..i.."HotKey"]:SetAlpha(0) end
--- end
+local function HideAllHotKeys()
+
+local names = {
+   "BonusActionButton",
+   "MultiBarBottomLeftButton",
+   "MultiBarBottomRightButton",
+   "ActionButton",
+   "MultiBarLeftButton",
+   "MultiBarRightButton"
+}
+
+for _, name in pairs(names) do
+   for i=1, 12 do
+      local HotKey = _G[name..i] and _G[name..i].HotKey
+      if HotKey then
+            HotKey:SetAlpha(0)
+      end
+   end
+end
+end
 
 local function HideUslessUI()
 
@@ -34,6 +45,9 @@ local function HideUslessUI()
 
 	--error UI
 	UIErrorsFrame:Hide();
+  
+  --Binds
+  HideAllHotKeys();
 	
 end
 
@@ -537,6 +551,7 @@ function EraUI_Update()
   UpdateGameToolTip();
   
   UpdateMicroButtonsAndBags();
+ 
   
 end
 
