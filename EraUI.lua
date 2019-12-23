@@ -213,6 +213,18 @@ local function UpdateTarget()
 end
 
 --********************************
+--            GameToolTip
+--********************************
+
+function UpdateGameToolTip()
+ GameTooltip:SetScript("OnTooltipSetUnit", function(self)
+      self:SetScale(0.8);
+      self:ClearAllPoints();
+      self:SetPoint("BOTTOMRIGHT", WorldFrame, "BOTTOMRIGHT", -230, 70);
+end)
+end
+
+--********************************
 --            Focus
 --********************************
 
@@ -324,6 +336,60 @@ local function ToggleAutoSellAndRepair()
 end
 
 --********************************
+--            CharchaterMicroButton
+--********************************
+
+local function HideMicroButtonsAndBags()
+
+	_Hide=not _Hide;
+  
+  if _Hide then
+     MicroButtonAndBagsBar:Hide()
+     CharacterMicroButton:Hide()
+     SpellbookMicroButton:Hide()
+     TalentMicroButton:Hide()
+     AchievementMicroButton:Hide()
+     QuestLogMicroButton:Hide()
+     GuildMicroButton:Hide()
+     LFDMicroButton:Hide()
+     CollectionsMicroButton:Hide()
+     EJMicroButton:Hide()
+     StoreMicroButton:Hide()
+     MainMenuMicroButton:Hide()
+  else
+    MicroButtonAndBagsBar:Show()
+    CharacterMicroButton:Show()
+    SpellbookMicroButton:Show()
+    TalentMicroButton:Show()
+    AchievementMicroButton:Show()
+    QuestLogMicroButton:Show()
+    GuildMicroButton:Show()
+    LFDMicroButton:Show()
+    CollectionsMicroButton:Show()
+    EJMicroButton:Show()
+    StoreMicroButton:Show()
+    MainMenuMicroButton:Show()
+  end
+end
+
+local function UpdateMicroButtonsAndBags()
+
+	
+	local f = CreateFrame("Button",nil,UIParent)
+	f:SetSize(30,30)
+	f.t=f:CreateTexture(nil,"BORDER")
+	f.t:SetTexture("Interface\\CHATFRAME\\UI-ChatIcon-Minimize-Up.blp")
+	f.t:SetAllPoints(f)
+  f:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT",0, 180);
+	f:Show()
+
+	local ChatHide = false
+
+	f:SetScript("OnClick", HideMicroButtonsAndBags);
+	
+end
+
+--********************************
 --            ChatBox
 --********************************
 
@@ -421,7 +487,11 @@ function EraUI_Update()
 	ToggleAutoSellAndRepair();
 	
 	UpdateChatBox();
-
+  
+  UpdateGameToolTip();
+  
+  UpdateMicroButtonsAndBags();
+  
 end
 
 
