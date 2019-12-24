@@ -83,11 +83,11 @@ local function UpdateBars()
 
 
 	ActionButton1:ClearAllPoints()
-	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 40);
+	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 0);
 	ActionButton1.SetPoint = function() end;
   
   MultiBarBottomLeft:ClearAllPoints()
-	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 82);
+	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 42);
 	MultiBarBottomLeft.SetPoint = function() end;
   
 
@@ -99,7 +99,7 @@ local function UpdateBars()
 	--Stance bar
 
 	StanceButton1:ClearAllPoints();
-	StanceButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 450, 78);
+	StanceButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 540, 150);
 	StanceButton1.SetPoint = function() end;
   StanceBarFrame:SetScale(0.8);
   
@@ -275,6 +275,10 @@ function UpdateGameToolTip()
       self:ClearAllPoints();
       self:SetPoint("BOTTOMRIGHT", WorldFrame, "BOTTOMRIGHT", -230, 70);
 end)
+
+--This should get rid of any random units that are moused over. If the unit is targetted, in your party/raid, or belongs to you, it'll still show.
+--GameTooltip:SetScript("OnTooltipSetUnit",function(self) if select(2,self:GetUnit())!="mouseover" then self:Hide(); end end);
+--GameTooltip:SetScript("OnTooltipSetUnit",function(self) self:Hide(); end);
 end
 
 --********************************
@@ -565,3 +569,32 @@ end
 EraUI_Frame:SetScript("OnEvent", EraUI_Frame_EventHandler)
 EraUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+--***********************************************************
+-- ADDON COMBAT
+--***********************************************************
+CTT=CreateFrame("Frame")
+CTT:SetParent(TargetFrame)
+CTT:SetPoint("Right",TargetFrame,-15)
+CTT:SetSize(26,26)
+CTT.t=CTT:CreateTexture(nil,BORDER)
+CTT.t:SetAllPoints()
+CTT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
+CTT:Hide()
+
+local function FrameOnUpdate(self) if UnitAffectingCombat("target") then self:Show() else self:Hide() end end
+local g = CreateFrame("Frame")
+g:SetScript("OnUpdate", function(self) FrameOnUpdate(CTT) end)
+
+CFT=CreateFrame("Frame")
+CFT:SetParent(FocusFrame)
+CFT:SetPoint("Right",FocusFrame,-15)
+CFT:SetSize(26,26)
+CFT.t=CFT:CreateTexture(nil,BORDER)
+CFT.t:SetAllPoints()
+CFT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
+CFT:Hide()
+
+local function FrameOnUpdate(self) if UnitAffectingCombat("focus") then self:Show() else self:Hide() end end
+local g = CreateFrame("Frame")
+g:SetScript("OnUpdate", function(self) FrameOnUpdate(CFT) end)
+--***********************************************************
