@@ -79,8 +79,6 @@ local function UpdateBars()
   StoreMicroButton:SetScale(0.8);
   MainMenuMicroButton:SetScale(0.8);
   
-  
-
 
 	ActionButton1:ClearAllPoints()
 	ActionButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 287, 0);
@@ -91,19 +89,21 @@ local function UpdateBars()
 	MultiBarBottomLeft.SetPoint = function() end;
   
 
-	
-	MultiBarBottomRightButton1:ClearAllPoints()
-	MultiBarBottomRightButton1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, -50);
-	MultiBarBottomRightButton1.SetPoint = function() end;
+  MultiBarBottomRight:ClearAllPoints()
+  UIPARENT_MANAGED_FRAME_POSITIONS["MultiBarBottomRight"] = nil
+  MultiBarBottomRightButton1:ClearAllPoints()
+  MultiBarBottomRightButton1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, -50);
+  MultiBarBottomRightButton1.SetPoint = function() end;
+  MultiBarBottomRight:SetScale(0.5)
+  MultiBarBottomRight:Show()
+
 	
 	--Stance bar
-
 	StanceButton1:ClearAllPoints();
 	StanceButton1:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 540, 150);
 	StanceButton1.SetPoint = function() end;
   StanceBarFrame:SetScale(0.8);
   
-
 
 end
 
@@ -133,7 +133,7 @@ local function UpdatePlayer()
 	
 	PlayerFrame:SetScale(1.2);
 	PlayerFrame:ClearAllPoints();
-	PlayerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",45, 500);
+	PlayerFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",5, 500);
 	PlayerFrame.SetPoint = function() end;
 	
 	PlayerPrestigeBadge:SetAlpha(0);
@@ -167,9 +167,21 @@ local function UpdatePlayer()
 	CastingBarFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 430, 90);
 	CastingBarFrame.SetPoint = function() end
 	CastingBarFrame:SetScale(1.5)
+  
+  -- disable hit indicator
+  PlayerFrame:UnregisterEvent('UNIT_COMBAT');
+  PlayerStatusTexture:Hide();
+  PlayerRestIcon:Hide();
+  PlayerAttackIcon:Hide();
+  PlayerRestGlow:Hide();
+  --PlayerLevelText:Hide()
+  PlayerAttackGlow:Hide();
+  PlayerStatusGlow:Hide();
 
 
 end
+
+
 
 local function ToggleEliteFrame()
 	local t="Interface\\TargetingFrame\\UI-TargetingFrame-rare"
@@ -224,7 +236,7 @@ local function UpdateTarget()
 
 	TargetFrame:SetScale(1.2);
 	TargetFrame:ClearAllPoints();
-	TargetFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 500);
+	TargetFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",230, 500);
 	TargetFrame.SetPoint = function() end;
 	
 	--Combo point on target
@@ -260,7 +272,7 @@ local function UpdateTarget()
 	
 	TargetFrameSpellBar:SetScale(1.88);
 	TargetFrameSpellBar:ClearAllPoints();
-	TargetFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",100, 315);
+	TargetFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",70, 315);
 	TargetFrameSpellBar.SetPoint = function() end;
 
 end
@@ -289,7 +301,7 @@ local function UpdateFocus()
 
 	FocusFrame:SetScale(1.2);
 	FocusFrame:ClearAllPoints();
-	FocusFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",270, 150);
+	FocusFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",230, 150);
 	FocusFrame.SetPoint = function() end;
 	
 	-- Remove PVP icon
@@ -318,7 +330,7 @@ local function UpdateFocus()
 	
 	FocusFrameSpellBar:SetScale(1.88)
 	FocusFrameSpellBar:ClearAllPoints();
-	FocusFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",100, 130);
+	FocusFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",70, 130);
 	FocusFrameSpellBar.SetPoint = function() end;
 end
 
@@ -437,7 +449,7 @@ end
 
 local function UpdateMicroButtonsAndBags()
 
-	HideMicroButtonsAndBags();
+	--HideMicroButtonsAndBags();
   
 	local f = CreateFrame("Button",nil,UIParent)
 	f:SetSize(30,30)
@@ -467,7 +479,7 @@ local function HideChatBox()
 			ChatFrameMenuButton:Hide();
 			ChatFrameChannelButton:Hide();
 			QuickJoinToastButton:Hide();
-			ObjectiveTrackerFrame:Hide();
+			--ObjectiveTrackerFrame:Hide();
 			end 
 			f.ORShow=f.ORShow or f.Show f.Show=_CHATHIDE and f.Hide or f.ORShow 
 			if f.v then 
@@ -475,7 +487,7 @@ local function HideChatBox()
 				ChatFrameMenuButton:Show();
 				ChatFrameChannelButton:Show();
 				QuickJoinToastButton:Show();
-				ObjectiveTrackerFrame:Show();
+				--ObjectiveTrackerFrame:Show();
 			end
 		end 
 	end
@@ -483,7 +495,7 @@ end
 
 local function UpdateChatBox()
 
-	HideChatBox();
+	--HideChatBox();
 	
 	local f = CreateFrame("Button",nil,UIParent)
 	f:SetSize(30,30)
