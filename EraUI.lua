@@ -27,24 +27,24 @@ end
 local function HideUslessUI()
 
 	-- MainBarArt
-	MainMenuBarArtFrameBackground:Hide();
-	MainMenuBarArtFrame.LeftEndCap:Hide();
-	MainMenuBarArtFrame.RightEndCap:Hide();
+	-- MainMenuBarArtFrameBackground:Hide();
+	-- MainMenuBarArtFrame.LeftEndCap:Hide();
+	-- MainMenuBarArtFrame.RightEndCap:Hide();
 	
 	-- Page Number
-	MainMenuBarArtFrame.PageNumber:Hide();
+	-- MainMenuBarArtFrame.PageNumber:Hide();
 	
 	-- Page Up, Down button
-	ActionBarDownButton:Hide();
-	ActionBarUpButton:Hide();
+	-- ActionBarDownButton:Hide();
+	-- ActionBarUpButton:Hide();
 
 	-- HonorBar
-	StatusTrackingBarManager:UnregisterAllEvents();
-	StatusTrackingBarManager:Hide();
-	StatusTrackingBarManager.Show=StatusTrackingBarManager.Hide;
+	-- StatusTrackingBarManager:UnregisterAllEvents();
+	-- StatusTrackingBarManager:Hide();
+	-- StatusTrackingBarManager.Show=StatusTrackingBarManager.Hide;
 
 	--error UI
-	UIErrorsFrame:Hide();
+	--UIErrorsFrame:Hide();
   
   --Binds
   HideAllHotKeys();
@@ -112,19 +112,19 @@ end
 --            PLAYER
 --********************************
 
-hooksecurefunc("UnitFramePortrait_Update",function(self)
-        if self.portrait then
-                if UnitIsPlayer(self.unit) then                         
-                        local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
-                        if t then
-                                self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
-                                self.portrait:SetTexCoord(unpack(t))
-                        end
-                else
-                        self.portrait:SetTexCoord(0,1,0,1)
-                end
-        end
-end)
+-- hooksecurefunc("UnitFramePortrait_Update",function(self)
+        -- if self.portrait then
+                -- if UnitIsPlayer(self.unit) then                         
+                        -- local t = CLASS_ICON_TCOORDS[select(2, UnitClass(self.unit))]
+                        -- if t then
+                                -- self.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
+                                -- self.portrait:SetTexCoord(unpack(t))
+                        -- end
+                -- else
+                        -- self.portrait:SetTexCoord(0,1,0,1)
+                -- end
+        -- end
+-- end)
 
 local function UpdatePlayer() 
 	BuffFrame:ClearAllPoints();
@@ -169,7 +169,7 @@ local function UpdatePlayer()
 	CastingBarFrame:SetScale(1.5)
   
   -- disable hit indicator
-  PlayerFrame:UnregisterEvent('UNIT_COMBAT');
+  --PlayerFrame:UnregisterEvent('UNIT_COMBAT');
   PlayerStatusTexture:Hide();
   PlayerRestIcon:Hide();
   PlayerAttackIcon:Hide();
@@ -199,34 +199,34 @@ end
 -- TODO addit in function
 --********************************
 
-local frame=CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
+-- local frame=CreateFrame("Frame")
+-- frame:RegisterEvent("ADDON_LOADED")
 
-frame:SetScript("OnEvent", function(self, event, addon)
-		if (addon == "Blizzard_TimeManager") then
-				for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
-						PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
-						TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
-						BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
-						MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
-						MiniMapMailBorder, MinimapBorderTop,
-						select(1, TimeManagerClockButton:GetRegions())
-				}) do
-						v:SetVertexColor(.4, .4, .4)
-				end
+-- frame:SetScript("OnEvent", function(self, event, addon)
+		-- if (addon == "Blizzard_TimeManager") then
+				-- for i, v in pairs({PlayerFrameTexture, TargetFrameTextureFrameTexture, PetFrameTexture, PartyMemberFrame1Texture, PartyMemberFrame2Texture, PartyMemberFrame3Texture, PartyMemberFrame4Texture,
+						-- PartyMemberFrame1PetFrameTexture, PartyMemberFrame2PetFrameTexture, PartyMemberFrame3PetFrameTexture, PartyMemberFrame4PetFrameTexture, FocusFrameTextureFrameTexture,
+						-- TargetFrameToTTextureFrameTexture, FocusFrameToTTextureFrameTexture, BonusActionBarFrameTexture0, BonusActionBarFrameTexture1, BonusActionBarFrameTexture2, BonusActionBarFrameTexture3,
+						-- BonusActionBarFrameTexture4, MainMenuBarTexture0, MainMenuBarTexture1, MainMenuBarTexture2, MainMenuBarTexture3, MainMenuMaxLevelBar0, MainMenuMaxLevelBar1, MainMenuMaxLevelBar2,
+						-- MainMenuMaxLevelBar3, MinimapBorder, CastingBarFrameBorder, FocusFrameSpellBarBorder, TargetFrameSpellBarBorder, MiniMapTrackingButtonBorder, MiniMapLFGFrameBorder, MiniMapBattlefieldBorder,
+						-- MiniMapMailBorder, MinimapBorderTop,
+						-- select(1, TimeManagerClockButton:GetRegions())
+				-- }) do
+						-- v:SetVertexColor(.4, .4, .4)
+				-- end
 
-				for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
-						v:SetVertexColor(1, 1, 1)
-				end
+				-- for i,v in pairs({ select(2, TimeManagerClockButton:GetRegions()) }) do
+						-- v:SetVertexColor(1, 1, 1)
+				-- end
 
-				self:UnregisterEvent("ADDON_LOADED")
-				frame:SetScript("OnEvent", nil)
-		end
-end)
+				-- self:UnregisterEvent("ADDON_LOADED")
+				-- frame:SetScript("OnEvent", nil)
+		-- end
+-- end)
 
-for i, v in pairs({ MainMenuBarLeftEndCap, MainMenuBarRightEndCap }) do
-		v:SetVertexColor(.35, .35, .35)
-end
+-- for i, v in pairs({ MainMenuBarLeftEndCap, MainMenuBarRightEndCap }) do
+		-- v:SetVertexColor(.35, .35, .35)
+-- end
 
 --********************************
 --            Target
@@ -304,34 +304,34 @@ local function UpdateFocus()
 	FocusFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",230, 150);
 	FocusFrame.SetPoint = function() end;
 	
-	-- Remove PVP icon
-	FocusFrameTextureFramePrestigeBadge:SetAlpha(0);
-	FocusFrameTextureFramePrestigePortrait:SetAlpha(0);
+	-- -- Remove PVP icon
+	-- FocusFrameTextureFramePrestigeBadge:SetAlpha(0);
+	-- FocusFrameTextureFramePrestigePortrait:SetAlpha(0);
 	
-	FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil);
-	FocusFrameSpellBar.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE");
-	FocusFrameSpellBar.timer:SetPoint("BOTTOMRIGHT", FocusFrameSpellBar, "BOTTOMRIGHT", 0, 0);
-	FocusFrameSpellBar.update = .1;
-	FocusFrameSpellBar:HookScript("OnUpdate",function(self,elapsed)
-		if not self.timer then return end
-		if self.update and self.update < elapsed then
-				if self.casting then
-						self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
-				elseif self.channeling then
-						self.timer:SetText(format("%.1f", max(self.value, 0)))
-				else
-						self.timer:SetText("")
-				end
-				self.update = .1
-		else
-				self.update = self.update - elapsed
-		end
-	end)
+	-- FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil);
+	-- FocusFrameSpellBar.timer:SetFont(STANDARD_TEXT_FONT,12,"OUTLINE");
+	-- FocusFrameSpellBar.timer:SetPoint("BOTTOMRIGHT", FocusFrameSpellBar, "BOTTOMRIGHT", 0, 0);
+	-- FocusFrameSpellBar.update = .1;
+	-- FocusFrameSpellBar:HookScript("OnUpdate",function(self,elapsed)
+		-- if not self.timer then return end
+		-- if self.update and self.update < elapsed then
+				-- if self.casting then
+						-- self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+				-- elseif self.channeling then
+						-- self.timer:SetText(format("%.1f", max(self.value, 0)))
+				-- else
+						-- self.timer:SetText("")
+				-- end
+				-- self.update = .1
+		-- else
+				-- self.update = self.update - elapsed
+		-- end
+	-- end)
 	
-	FocusFrameSpellBar:SetScale(1.88)
-	FocusFrameSpellBar:ClearAllPoints();
-	FocusFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",70, 130);
-	FocusFrameSpellBar.SetPoint = function() end;
+	-- FocusFrameSpellBar:SetScale(1.88)
+	-- FocusFrameSpellBar:ClearAllPoints();
+	-- FocusFrameSpellBar:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT",70, 130);
+	-- FocusFrameSpellBar.SetPoint = function() end;
 end
 
 --********************************
@@ -514,59 +514,59 @@ end
 --********************************
 --            QuestTracker
 --********************************
-local QT = ObjectiveTrackerFrame
-QT.ClearAllPoints = function() end
-QT:SetPoint("TOPRIGHT", MinimapCluster, "BOTTOM", 45, -5) 
-QT.SetPoint = function() end
-QT:SetMovable(true)
-QT:SetUserPlaced(true)
-QT:SetClampedToScreen(true)
-QT:SetHeight(550)
-QT:SetWidth(190)
+-- local QT = ObjectiveTrackerFrame
+-- QT.ClearAllPoints = function() end
+-- QT:SetPoint("TOPRIGHT", MinimapCluster, "BOTTOM", 45, -5) 
+-- QT.SetPoint = function() end
+-- QT:SetMovable(true)
+-- QT:SetUserPlaced(true)
+-- QT:SetClampedToScreen(true)
+-- QT:SetHeight(550)
+-- QT:SetWidth(190)
 
-local MoveQuestTracker = CreateFrame("Frame", nil, QT)  
-MoveQuestTracker:SetHeight(15)
-MoveQuestTracker:ClearAllPoints()
-MoveQuestTracker:SetPoint("TOPLEFT", QT)
-MoveQuestTracker:SetPoint("TOPRIGHT", QT)
-MoveQuestTracker:EnableMouse(true)
-MoveQuestTracker:SetHitRectInsets(-5, -5, -5, -5)
-MoveQuestTracker:RegisterForDrag("LeftButton")
-MoveQuestTracker:SetScript("OnDragStart", function(self, button)
-	if button=="LeftButton" and IsModifiedClick()then
-		QT:StartMoving()
-	end
-end)
-MoveQuestTracker:SetScript("OnDragStop", function(self, button)
-	QT:StopMovingOrSizing()
-end)
+-- local MoveQuestTracker = CreateFrame("Frame", nil, QT)  
+-- MoveQuestTracker:SetHeight(15)
+-- MoveQuestTracker:ClearAllPoints()
+-- MoveQuestTracker:SetPoint("TOPLEFT", QT)
+-- MoveQuestTracker:SetPoint("TOPRIGHT", QT)
+-- MoveQuestTracker:EnableMouse(true)
+-- MoveQuestTracker:SetHitRectInsets(-5, -5, -5, -5)
+-- MoveQuestTracker:RegisterForDrag("LeftButton")
+-- MoveQuestTracker:SetScript("OnDragStart", function(self, button)
+	-- if button=="LeftButton" and IsModifiedClick()then
+		-- QT:StartMoving()
+	-- end
+-- end)
+-- MoveQuestTracker:SetScript("OnDragStop", function(self, button)
+	-- QT:StopMovingOrSizing()
+-- end)
 
 --********************************
 --            Main
 --********************************
 function EraUI_Update()
 
-	UpdatePlayer();
+	--UpdatePlayer();
 
-	UpdateTarget();
+	--UpdateTarget();
 
-	UpdateFocus();
+	--UpdateFocus();
 	
 	HideUslessUI();
 	
-	UpdateBars();
+	--UpdateBars();
 	
-	ToggleEliteFrame();
+	--ToggleEliteFrame();
 	
-	UpdateMinimap();
+	--UpdateMinimap();
 	
-	ToggleAutoSellAndRepair();
+	--ToggleAutoSellAndRepair();
 	
-	UpdateChatBox();
+	--UpdateChatBox();
   
-  UpdateGameToolTip();
+  --UpdateGameToolTip();
   
-  UpdateMicroButtonsAndBags();
+  --UpdateMicroButtonsAndBags();
  
   
 end
@@ -584,29 +584,29 @@ EraUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 --***********************************************************
 -- ADDON COMBAT
 --***********************************************************
-CTT=CreateFrame("Frame")
-CTT:SetParent(TargetFrame)
-CTT:SetPoint("Right",TargetFrame,-15)
-CTT:SetSize(26,26)
-CTT.t=CTT:CreateTexture(nil,BORDER)
-CTT.t:SetAllPoints()
-CTT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
-CTT:Hide()
+-- CTT=CreateFrame("Frame")
+-- CTT:SetParent(TargetFrame)
+-- CTT:SetPoint("Right",TargetFrame,-15)
+-- CTT:SetSize(26,26)
+-- CTT.t=CTT:CreateTexture(nil,BORDER)
+-- CTT.t:SetAllPoints()
+-- CTT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
+-- CTT:Hide()
 
-local function FrameOnUpdate(self) if UnitAffectingCombat("target") then self:Show() else self:Hide() end end
-local g = CreateFrame("Frame")
-g:SetScript("OnUpdate", function(self) FrameOnUpdate(CTT) end)
+-- local function FrameOnUpdate(self) if UnitAffectingCombat("target") then self:Show() else self:Hide() end end
+-- local g = CreateFrame("Frame")
+-- g:SetScript("OnUpdate", function(self) FrameOnUpdate(CTT) end)
 
-CFT=CreateFrame("Frame")
-CFT:SetParent(FocusFrame)
-CFT:SetPoint("Right",FocusFrame,-15)
-CFT:SetSize(26,26)
-CFT.t=CFT:CreateTexture(nil,BORDER)
-CFT.t:SetAllPoints()
-CFT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
-CFT:Hide()
+-- CFT=CreateFrame("Frame")
+-- CFT:SetParent(FocusFrame)
+-- CFT:SetPoint("Right",FocusFrame,-15)
+-- CFT:SetSize(26,26)
+-- CFT.t=CFT:CreateTexture(nil,BORDER)
+-- CFT.t:SetAllPoints()
+-- CFT.t:SetTexture("Interface\\Icons\\ABILITY_DUALWIELD")
+-- CFT:Hide()
 
-local function FrameOnUpdate(self) if UnitAffectingCombat("focus") then self:Show() else self:Hide() end end
-local g = CreateFrame("Frame")
-g:SetScript("OnUpdate", function(self) FrameOnUpdate(CFT) end)
+-- local function FrameOnUpdate(self) if UnitAffectingCombat("focus") then self:Show() else self:Hide() end end
+-- local g = CreateFrame("Frame")
+-- g:SetScript("OnUpdate", function(self) FrameOnUpdate(CFT) end)
 --***********************************************************
